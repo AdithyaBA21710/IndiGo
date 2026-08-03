@@ -7,10 +7,10 @@ ax=ax.flatten()
 
 a=data['Profit']
 
-columns=['Operating Revenue', 'Non-Operating Revenue', 'ASK', 'RPK', 'PLF', 'RASK', 'CASK', 'CASK ex-Fuel', 'Fuel Costs', 'Other Costs', 'Fleet', 'USD']
+column1 = data.columns.drop(["Profit","Quarter"])
 
 
-for i,v in enumerate(columns):
+for i,v in enumerate(column1):
     ax[i].scatter(a,data[v])
     ax[i].set_title(v+" vs Profit")
     ax[i].set_xlabel("Profit")
