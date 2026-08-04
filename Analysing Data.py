@@ -9,7 +9,6 @@ a=data['Profit']
 
 column1 = data.columns.drop(["Profit","Quarter"])
 
-
 for i,v in enumerate(column1):
     ax[i].scatter(a,data[v])
     ax[i].set_title(v+" vs Profit")
