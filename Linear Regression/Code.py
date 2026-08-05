@@ -2,11 +2,39 @@ import pandas as pd
 import numpy as np
 from sklearn.compose import ColumnTransformer
 from sklearn.preprocessing import OneHotEncoder
+from sklearn.preprocessing import StandardScaler
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LinearRegression
+from sklearn.metrics import mean_absolute_error,mean_squared_error
+import matplotlib.pyplot as plt 
 
 data=pd.read_csv(r"C:\Users\adith_a9r1d5f\IndiGo Financials ML Model\IndiGo Financials.csv")
 rows=data.drop(columns='Profit')
 labels=data['Profit']
 
-ct=ColumnTransformer(transformers=[('encode',OneHotEncoder(),['Quarter'])],remainder='passthrough')
-encoded_rows=ct.fit_transform(rows)
+numeric_features = rows.select_dtypes(include='number').columns.tolist()
+print(numeric_features)
+
+ct=ColumnTransformer(transformers=[('Encode',OneHotEncoder(drop='first'),['Quarter']),('Scale',StandardScaler(),numeric_features)])
+preprocessed_rows=ct.fit_transform(rows)
+
+r_train, r_test, l_train, l_test = train_test_split(preprocessed_rows, labels, test_size=0.3, random_state=42)
+
+lr=LinearRegression()
+lr.fit(r_train,l_train)
+
+y_pred=lr.predict(r_test)
+
+comparison=pd.DataFrame({'Actual':l_test,'Predicted':y_pred})
+print (comparison)
+
+plt.scatter(l_test,y_pred)
+plt.plot(
+    [l_test.min(), l_test.max()],
+    [l_test.min(), l_test.max()],
+    color='red',
+    linestyle='--'
+)
+plt.show()  
+
 
