@@ -18,7 +18,7 @@ print(numeric_features)
 ct=ColumnTransformer(transformers=[('Encode',OneHotEncoder(drop='first'),['Quarter']),('Scale',StandardScaler(),numeric_features)])
 preprocessed_rows=ct.fit_transform(rows)
 
-r_train, r_test, l_train, l_test = train_test_split(preprocessed_rows, labels, test_size=0.3, random_state=42)
+r_train, r_test, l_train, l_test = train_test_split(preprocessed_rows, labels, test_size=0.2, random_state=42)
 
 lr=LinearRegression()
 lr.fit(r_train,l_train)
