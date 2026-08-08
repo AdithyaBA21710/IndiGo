@@ -9,12 +9,12 @@ from sklearn.metrics import mean_absolute_error,mean_squared_error
 import matplotlib.pyplot as plt 
 
 data=pd.read_csv(r"C:\Users\adith_a9r1d5f\IndiGo Financials ML Model\IndiGo Financials.csv")
-rows=data.drop(columns='Profit')
+rows=data.drop(columns=['Profit','Quarter'])
 labels=data['Profit']
 
 numeric_features = rows.select_dtypes(include='number').columns.tolist()
 
-ct=ColumnTransformer(transformers=[('Encode',OneHotEncoder(drop='first'),['Quarter']),('Scale',StandardScaler(),numeric_features)])
+ct=ColumnTransformer(transformers=[('Scale',StandardScaler(),numeric_features)])
 preprocessed_rows=ct.fit_transform(rows)
 
 r_train, r_test, l_train, l_test = train_test_split(preprocessed_rows, labels, test_size=0.2, random_state=42)
