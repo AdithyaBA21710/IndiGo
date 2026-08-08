@@ -13,7 +13,6 @@ rows=data.drop(columns='Profit')
 labels=data['Profit']
 
 numeric_features = rows.select_dtypes(include='number').columns.tolist()
-print(numeric_features)
 
 ct=ColumnTransformer(transformers=[('Encode',OneHotEncoder(drop='first'),['Quarter']),('Scale',StandardScaler(),numeric_features)])
 preprocessed_rows=ct.fit_transform(rows)
