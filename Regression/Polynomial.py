@@ -20,7 +20,7 @@ r_train, r_test, l_train, l_test = train_test_split(rows, labels, test_size=0.2,
 
 ct=ColumnTransformer(transformers=
                      [('Scale',Pipeline([("Scaler",StandardScaler()),
-                      ("Poly",PolynomialFeatures(degree=2,include_bias=False))]),numeric_features)])
+                      ("Poly",PolynomialFeatures(degree=3,include_bias=False))]),numeric_features)])
 
 
 model = Pipeline([
@@ -32,6 +32,11 @@ model.fit(r_train,l_train)
 
 y_pred = model.predict(r_test)
 
+sum=np.sum(np.abs(l_test - y_pred))
+mae=sum/y_pred.size
+
+print(mae)
+
 results = pd.DataFrame({'Actual':l_test,'Predicted':y_pred})
 print(results)
 
@@ -42,4 +47,4 @@ plt.plot(
     color='red',
     linestyle='--'
 )
-plt.show()  
+plt.show()

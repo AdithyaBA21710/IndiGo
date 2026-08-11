@@ -24,6 +24,12 @@ lr.fit(r_train,l_train)
 
 y_pred=lr.predict(r_test)
 
+sum=np.sum(np.abs(l_test - y_pred))
+mae=sum/y_pred.size
+
+print(mae)
+
+
 comparison=pd.DataFrame({'Actual':l_test,'Predicted':y_pred})
 print (comparison)
 
@@ -34,6 +40,4 @@ plt.plot(
     color='red',
     linestyle='--'
 )
-plt.show()  
-
-
+plt.show()
