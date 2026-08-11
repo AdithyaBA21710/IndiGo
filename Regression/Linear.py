@@ -24,11 +24,21 @@ lr.fit(r_train,l_train)
 
 y_pred=lr.predict(r_test)
 
-sum=np.sum(np.abs(l_test - y_pred))
+diff=l_test - y_pred
+sum=np.sum(np.abs(diff))
 mae=sum/y_pred.size
 
-print(mae)
+print (mae)
 
+sum=np.sum((np.abs(diff)).pow(2))
+mse=sum/y_pred.size
+
+print(mse)
+
+sum=np.sum((np.abs(diff)).pow(2))
+mse=sum/y_pred.size
+
+print(mse^1/2)
 
 comparison=pd.DataFrame({'Actual':l_test,'Predicted':y_pred})
 print (comparison)
