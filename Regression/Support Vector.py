@@ -19,7 +19,7 @@ ct=ColumnTransformer(transformers=[('Scale',StandardScaler(),numeric_features)])
 
 base_model = Pipeline([
     ("Preprocessor", ct),
-    ("Regressor", SVR(kernel='rbf',C=100,epsilon=0.1))
+    ("Regressor", SVR(kernel='linear',C=90,epsilon=0.05))
 ])
 
 model = TransformedTargetRegressor(
@@ -33,6 +33,17 @@ y_pred = model.predict(r_test)
 
 results = pd.DataFrame({'Actual':l_test,'Predicted':y_pred})
 print(results)
+
+diff=l_test - y_pred
+sum=np.sum(np.abs(diff))
+mae=sum/y_pred.size
+
+print (mae)
+
+sum=np.sum((np.abs(diff)).pow(2))
+mse=sum/y_pred.size
+
+print(mse)
 
 plt.scatter(l_test,y_pred)
 plt.plot(
