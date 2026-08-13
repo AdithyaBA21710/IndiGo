@@ -1,6 +1,6 @@
 import pandas as pd
 import numpy as np
-from sklearn.compose import ColumnTransformer
+from sklearn.compose import ColumnTransformer, TransformedTargetRegressor
 from sklearn.preprocessing import StandardScaler
 from sklearn.pipeline import Pipeline
 from sklearn.model_selection import train_test_split
@@ -17,10 +17,15 @@ r_train, r_test, l_train, l_test = train_test_split(rows, labels, test_size=0.2,
 
 ct=ColumnTransformer(transformers=[('Scale',StandardScaler(),numeric_features)])
 
-model = Pipeline([
+base_model = Pipeline([
     ("Preprocessor", ct),
     ("Regressor", SVR(kernel='rbf',C=100,epsilon=0.1))
 ])
+
+model = TransformedTargetRegressor(
+    regressor=base_model,
+    transformer=StandardScaler()
+)
 
 model.fit(r_train,l_train)
 
