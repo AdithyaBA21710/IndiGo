@@ -1,11 +1,9 @@
 import pandas as pd
 import numpy as np
 from sklearn.compose import ColumnTransformer
-from sklearn.preprocessing import OneHotEncoder
 from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression
-from sklearn.metrics import mean_absolute_error,mean_squared_error
 import matplotlib.pyplot as plt 
 
 data=pd.read_csv(r"C:\Users\adith_a9r1d5f\IndiGo Financials ML Model\IndiGo Financials.csv")
@@ -34,11 +32,6 @@ sum=np.sum((np.abs(diff)).pow(2))
 mse=sum/y_pred.size
 
 print(mse)
-
-sum=np.sum((np.abs(diff)).pow(2))
-mse=sum/y_pred.size
-
-print(mse^1/2)
 
 comparison=pd.DataFrame({'Actual':l_test,'Predicted':y_pred})
 print (comparison)
