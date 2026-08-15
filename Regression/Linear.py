@@ -20,6 +20,10 @@ r_train, r_test, l_train, l_test = train_test_split(preprocessed_rows, labels, t
 lr=LinearRegression()
 lr.fit(r_train,l_train)
 
+"""
+test = pd.DataFrame({"Operating Revenue":,"Non-Operating Revenue":,"ASK":,"RPK":,"PLF":,"RASK":,"CASK":,"CASK ex-Fuel":,"Fuel Costs":,"Other Costs":,"Fleet":,"USD":,"Profit":})
+"""
+
 y_pred=lr.predict(r_test)
 
 diff=l_test - y_pred

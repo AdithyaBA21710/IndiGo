@@ -29,10 +29,11 @@ model = TransformedTargetRegressor(
 
 model.fit(r_train,l_train)
 
-y_pred = model.predict(r_test)
+"""
+test = pd.DataFrame({"Operating Revenue":,"Non-Operating Revenue":,"ASK":,"RPK":,"PLF":,"RASK":,"CASK":,"CASK ex-Fuel":,"Fuel Costs":,"Other Costs":,"Fleet":,"USD":,"Profit":})
+"""
 
-results = pd.DataFrame({'Actual':l_test,'Predicted':y_pred})
-print(results)
+y_pred = model.predict(r_test)
 
 diff=l_test - y_pred
 sum=np.sum(np.abs(diff))
@@ -44,6 +45,9 @@ sum=np.sum((np.abs(diff)).pow(2))
 mse=sum/y_pred.size
 
 print(mse)
+
+results = pd.DataFrame({'Actual':l_test,'Predicted':y_pred})
+print(results)
 
 plt.scatter(l_test,y_pred)
 plt.plot(

@@ -28,6 +28,10 @@ model = Pipeline([
 
 model.fit(r_train,l_train)
 
+"""
+test = pd.DataFrame({"Operating Revenue":,"Non-Operating Revenue":,"ASK":,"RPK":,"PLF":,"RASK":,"CASK":,"CASK ex-Fuel":,"Fuel Costs":,"Other Costs":,"Fleet":,"USD":,"Profit":})
+"""
+
 y_pred = model.predict(r_test)
 
 diff=l_test - y_pred
