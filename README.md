@@ -39,17 +39,7 @@ The dataset contains quarterly IndiGo financial and operational information.
 
 ## Preprocessing
 
-`Quarter` is a categorical feature and is one-hot encoded using:
-
-```python
-OneHotEncoder(drop="first", handle_unknown="ignore")
-```
-
-Numerical features are standardized using:
-
-```python
-StandardScaler()
-```
+`Quarter` is a categorical feature and can be one-hot encoded. Since Quarter does not affect the finance of a company, the feature has been dropped.
 
 Preprocessing is performed with a `ColumnTransformer` and `Pipeline` so that transformations learned from the training data are reused consistently during testing and prediction.
 
@@ -57,8 +47,6 @@ The general workflow is:
 
 ```text
 Raw Data
-   |
-   +-- Quarter -----------> OneHotEncoder
    |
    +-- Numeric Features --> StandardScaler
    |
@@ -90,7 +78,7 @@ y_pred = model.predict(X_test)
 
 Linear Regression assumes a linear relationship between the input features and the target.
 
-![alt text](image-1.png)
+<p align="center">![alt text](image-1.png)</p>
 <p align="center">Graph showing how Linear Regression fits the test set</p>
 
 ## 2. Polynomial Regression
@@ -117,6 +105,9 @@ model = Pipeline([
 
 Polynomial Regression can model nonlinear relationships, but it can also produce many features and overfit small datasets. Therefore, higher polynomial degrees should be used carefully.
 
+<p align="center">![alt text](image-3.png)</p>
+<p align="center">Graph showing how Polynomial Regression fits the test set</p>
+
 ## 3. Support Vector Regression
 
 Support Vector Regression is used as a nonlinear regression model.
@@ -129,9 +120,9 @@ from sklearn.svm import SVR
 model = Pipeline([
     ("Preprocessor", preprocessor),
     ("Regressor", SVR(
-        kernel="rbf",
-        C=100,
-        epsilon=0.1
+        kernel="linear",
+        C=90,
+        epsilon=0.05
     ))
 ])
 
@@ -143,151 +134,26 @@ SVR is sensitive to feature scale, so numerical features are standardized before
 
 The RBF kernel allows SVR to learn nonlinear relationships without explicitly generating polynomial features.
 
+<p align="center">![alt text](image-2.png)</p>
+<p align="center">Graph showing how SVR fits the test set</p>
+
 ## Model Evaluation
 
-The models are evaluated using MAE, MSE, RMSE, and R².
-
-### Mean Absolute Error
-
-MAE measures the average absolute difference between actual and predicted values.
-
-```python
-mae = np.mean(np.abs(y_test - y_pred))
-```
-
-or:
-
-```python
-from sklearn.metrics import mean_absolute_error
-
-mae = mean_absolute_error(y_test, y_pred)
-```
-
-Lower MAE is better.
-
-### Mean Squared Error
-
-MSE is the average squared prediction error.
-
-```python
-mse = np.mean((y_test - y_pred) ** 2)
-```
-
-Lower MSE is better.
-
-### Root Mean Squared Error
-
-RMSE is the square root of MSE.
-
-```python
-rmse = np.sqrt(mse)
-```
-
-Lower RMSE is better.
-
-### R-squared
-
-R² measures how much of the variation in the target is explained by the model.
-
-```python
-from sklearn.metrics import r2_score
-
-r2 = r2_score(y_test, y_pred)
-```
-
-A value closer to 1 generally indicates better performance.
+The models are evaluated using MAE, MSE and RMSE.
 
 ## Current Results
 
 On the evaluated test split, the current results were:
 
-| Model | R² | MAE | RMSE |
-|---|---:|---:|---:|
-| Linear Regression | 0.960 | approximately ₹2.91B | approximately ₹3.17B |
-| Polynomial Regression | 0.846 | approximately ₹4.22B | approximately ₹6.26B |
-| SVR | To be evaluated | To be evaluated | To be evaluated |
+| Model | MAE | RMSE |
+|---|---:|---:|
+| Linear Regression | ₹2.91B | ₹3.17B |
+| Polynomial Regression | ₹4.22B | ₹6.26B |
+| SVR | ₹1.42B | ₹1.74B |
 
-Based on the current test split, Linear Regression performed better than Polynomial Regression.
+Based on the current test split, SVR performed better than Linear & Polynomial Regression.
 
 These results are not definitive because the dataset contains only approximately 42 observations. A different train/test split can produce different results.
-
-## Actual vs Predicted Plot
-
-The models can be evaluated visually with an Actual vs Predicted scatter plot:
-
-```python
-import matplotlib.pyplot as plt
-
-plt.figure(figsize=(7, 7))
-
-plt.scatter(y_test, y_pred)
-
-plt.plot(
-    [y_test.min(), y_test.max()],
-    [y_test.min(), y_test.max()],
-    color="red",
-    linestyle="--"
-)
-
-plt.xlabel("Actual Profit")
-plt.ylabel("Predicted Profit")
-plt.title("Actual vs Predicted Profit")
-plt.grid(True)
-
-plt.show()
-```
-
-The diagonal line represents perfect predictions. Points closer to the line indicate smaller prediction errors.
-
-## Custom Predictions
-
-Because preprocessing and the model are combined in a pipeline, a new observation can be passed directly to the trained model.
-
-```python
-custom_data = pd.DataFrame({
-    "Quarter": ["Q1 FY26"],
-    "Operating Revenue": [250000000000],
-    "Non-Operating Revenue": [12000000000],
-    "ASK": [47000000000],
-    "RPK": [40000000000],
-    "PLF": [85.1],
-    "RASK": [5.3],
-    "CASK": [4.7],
-    "CASK ex-Fuel": [3.5],
-    "Fuel Costs": [72000000000],
-    "Other Costs": [160000000000],
-    "Fleet": [450],
-    "USD": [91.5]
-})
-
-prediction = model.predict(custom_data)
-
-print("Predicted Profit:", prediction[0])
-```
-
-The custom input must contain the same feature names used during training.
-
-## Suggested Project Structure
-
-```text
-IndiGo Financials ML Model/
-|
-+-- IndiGo Financials.csv
-+-- Linear Regression.py
-+-- Polynomial Regression.py
-+-- SVR.py
-+-- README.md
-|
-+-- models/
-|   +-- linear_model.pkl
-|   +-- polynomial_model.pkl
-|   +-- svr_model.pkl
-|
-+-- plots/
-    +-- actual_vs_predicted_linear.png
-    +-- actual_vs_predicted_polynomial.png
-    +-- actual_vs_predicted_svr.png
-```
 
 ## Installation
 
@@ -302,7 +168,7 @@ pip install pandas numpy scikit-learn matplotlib
 1. Place the dataset in the expected location.
 2. Install the required Python packages.
 3. Run each model script.
-4. Record MAE, MSE, RMSE, and R².
+4. Record MAE, MSE and RMSE.
 5. Compare Actual vs Predicted plots.
 
 Example:
@@ -330,35 +196,6 @@ The current experiments use a train/test split. Cross-validation should be consi
 The data is quarterly and therefore has a temporal structure. A random train/test split may not accurately represent the real-world task of predicting future quarters.
 
 A future version should consider a chronological split, where earlier quarters are used for training and later quarters are used for testing.
-
-### Feature Correlation
-
-Several financial and operational variables are likely to be strongly correlated. Multicollinearity can affect Linear Regression coefficients and may make some models unstable.
-
-Ridge Regression is a useful additional model to evaluate for this reason.
-
-## Future Improvements
-
-- Use time-based train/test splitting.
-- Use cross-validation for model comparison.
-- Tune SVR hyperparameters such as `C`, `epsilon`, and `gamma`.
-- Experiment with Ridge and Lasso Regression.
-- Analyze feature correlation and multicollinearity.
-- Perform feature selection.
-- Compare training and test performance to identify overfitting.
-- Save trained models using `joblib`.
-- Build an API for custom predictions.
-- Deploy the selected model on AWS.
-- Create a web interface for entering financial data and obtaining predictions.
-
-## Technologies Used
-
-- Python
-- Pandas
-- NumPy
-- Scikit-learn
-- Matplotlib
-- AWS for potential deployment
 
 ## Disclaimer
 
