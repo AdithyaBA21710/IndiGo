@@ -25,14 +25,16 @@ The dataset contains quarterly IndiGo financial and operational information.
 - `RASK` - Revenue Per Available Seat Kilometer (How much money an airline generates for every seat flown one kilometer). Higher the better
 - `CASK` - Cost Per Available Seat Kilometer (Unit cost or operational efficiency). Lower the better
 - `CASK ex-Fuel` - Cost Per Available Seat Kilometer excluding fuel costs
-- `Fuel Costs` - Self explainatory
+- `Fuel Costs` - Self explanatory
 - `Other Costs` - Cost of new aircraft, spares purchased, airport fees etc..  
-- `Fleet` - Size of fleet (A320 family, ATR, 777 & 787 have been part of IndiGo's fleet )
+- `Fleet` - Size of fleet (ATR, A320 family, 737, 777 & 787 have been part of IndiGo's fleet. Most owned/dry-lease, some on wet-lease)
 - `USD` - Exchange rate of USD with INR
 
 ### Target
 
 - `Profit` - Net money made during the period
+
+![alt text](image.png)
 
 ## Preprocessing
 
