@@ -35,6 +35,7 @@ The dataset contains quarterly IndiGo financial and operational information.
 - `Profit` - Net money made during the period
 
 ![alt text](image.png)
+<p align="center">Graphs showing how different features influence Profit</p>  
 
 ## Preprocessing
 
