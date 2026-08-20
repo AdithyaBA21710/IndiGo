@@ -90,6 +90,9 @@ y_pred = model.predict(X_test)
 
 Linear Regression assumes a linear relationship between the input features and the target.
 
+![alt text](image-1.png)
+<p align="center">Graph showing how Linear Regression fits the test set</p>
+
 ## 2. Polynomial Regression
 
 Polynomial Regression extends Linear Regression by generating polynomial and interaction features.

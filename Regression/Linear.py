@@ -37,6 +37,8 @@ mse=sum/y_pred.size
 
 print(mse)
 
+print(np.sqrt(mse))
+
 comparison=pd.DataFrame({'Actual':l_test,'Predicted':y_pred})
 print (comparison)
 
