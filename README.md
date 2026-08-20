@@ -39,7 +39,7 @@ The dataset contains quarterly IndiGo financial and operational information.
 
 ## Preprocessing
 
-`Quarter` is a categorical feature and can be one-hot encoded. Since Quarter does not affect the finance of a company, the feature has been dropped.
+`Quarter` is a categorical feature and can be one-hot encoded. Since `Quarter` does not affect the finance of a company, the feature has been dropped.
 
 Preprocessing is performed with a `ColumnTransformer` and `Pipeline` so that transformations learned from the training data are reused consistently during testing and prediction.
 
@@ -78,7 +78,7 @@ y_pred = model.predict(X_test)
 
 Linear Regression assumes a linear relationship between the input features and the target.
 
-<p align="center">![alt text](image-1.png)</p>
+![alt text](image-1.png)
 <p align="center">Graph showing how Linear Regression fits the test set</p>
 
 ## 2. Polynomial Regression
@@ -105,7 +105,7 @@ model = Pipeline([
 
 Polynomial Regression can model nonlinear relationships, but it can also produce many features and overfit small datasets. Therefore, higher polynomial degrees should be used carefully.
 
-<p align="center">![alt text](image-3.png)</p>
+![alt text](image-3.png)
 <p align="center">Graph showing how Polynomial Regression fits the test set</p>
 
 ## 3. Support Vector Regression
@@ -134,7 +134,7 @@ SVR is sensitive to feature scale, so numerical features are standardized before
 
 The RBF kernel allows SVR to learn nonlinear relationships without explicitly generating polynomial features.
 
-<p align="center">![alt text](image-2.png)</p>
+![alt text](image-2.png)
 <p align="center">Graph showing how SVR fits the test set</p>
 
 ## Model Evaluation
