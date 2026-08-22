@@ -240,12 +240,12 @@ The models are evaluated using MAE, MSE and RMSE.
 
 On the evaluated test split, the current results were:
 
-  Model                        MAE     RMSE
-  ----------------------- -------- --------
-  SVR                       ₹1.42B   ₹1.74B
-  Linear Regression         ₹2.91B   ₹3.17B
-  ANN                       ₹3.38B   ₹4.90B
-  Polynomial Regression     ₹4.22B   ₹6.26B
+| Model | MAE | RMSE |
+|---|---:|---:|
+| SVR | ₹1.42B | ₹1.74B |
+| Linear Regression | ₹2.91B | ₹3.17B |
+| ANN | ₹3.38B | ₹4.90B |
+| Polynomial Regression | ₹4.22B | ₹6.26B |
 
 Based on the current test split, SVR performed best, followed by Linear
 Regression, ANN, and Polynomial Regression. The ANN improved over
